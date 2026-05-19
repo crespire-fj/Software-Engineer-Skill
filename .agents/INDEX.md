@@ -52,8 +52,15 @@ Not loaded:
 
 | Skill                 | File                                       | Purpose                                                                                                                                                                  |
 | --------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Agent Team            | `/.agents/skills/agent-team.md`            | Optional project manager and specialist subagent workflow for broad, risky, cross-module, or context-heavy tasks.                                                       |
 | Security              | `/.agents/skills/security.md`              | Authentication, authorization, RBAC, ownership scope, input validation, public form abuse controls, file upload safety, webhook authenticity, and sensitive data safety. |
 | Modules               | `/.agents/skills/modules.md`               | Module boundaries, public contracts, invariants, data ownership, README discipline, dependency direction, and AHA abstraction discipline.                                |
+| Project Planning      | `/.agents/skills/project-planning.md`      | Turns broad ideas, product briefs, MVPs, roadmaps, and major feature requests into approved implementation direction before coding.                                      |
+| Task Breakdown        | `/.agents/skills/task-breakdown.md`        | Converts approved plans, designs, and feature scopes into implementation-ready tasks with dependencies, acceptance criteria, tests, and documentation impact.             |
+| Task Assignment       | `/.agents/skills/task-assignment.md`       | Assigns tasks safely to agents, subagents, contributors, or parallel workstreams with clear ownership, boundaries, expected output, and integration rules.                |
+| Brand Identity        | `/.agents/skills/brand-identity.md`        | Defines product identity, visual direction, tone, tokens, typography, imagery, chart style, and approval expectations before high-fidelity UI design.                    |
+| User Experience       | `/.agents/skills/ux-design.md`             | Defines user journeys, onboarding, navigation, flows, interaction behavior, accessibility expectations, privacy moments, and UX approval before UI build.                 |
+| UI Mock Approval      | `/.agents/skills/ui-mock-approval.md`      | Governs wireframes, mockups, prototypes, design approval, state coverage, responsive coverage, and Image Gen usage after brand identity is finalized.                    |
 | Database              | `/.agents/skills/database.md`              | SQL, ORM, query builders, query safety, connection pooling, query-level performance, constraints, relationships, indexing, and data access patterns.                     |
 | Migrations            | `/.agents/skills/migrations.md`            | Schema changes, additive-first migrations, backfills, seed data, rollback, destructive change approval, and production data safety.                                      |
 | API Design            | `/.agents/skills/api-design.md`            | Endpoint contracts, route and method design, request/response shape, pagination, filtering, sorting, errors, idempotency, and compatibility.                             |
@@ -78,6 +85,14 @@ All rows are additive to the baseline skills. For non-trivial tasks, load `secur
 
 | Task signal                                                                 | Load these additional skills                                  |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Broad, risky, cross-module, long-running, or context-heavy task             | `agent-team.md`                                               |
+| PRD, spec, brief, research, design reference, or source document review     | `project-planning.md`, `documentation.md`                     |
+| New project idea, product brief, MVP, roadmap, or broad feature plan        | `project-planning.md`, `documentation.md`                     |
+| Task planning, backlog shaping, implementation slicing                      | `task-breakdown.md`, `testing.md`                             |
+| Assigning work to agents, subagents, contributors, or parallel streams      | `task-assignment.md`, `agent-team.md` if parallel agents are used |
+| Brand direction, visual identity, tone, design tokens, product identity     | `brand-identity.md`, `documentation.md`                       |
+| User journeys, onboarding, flows, IA, interaction behavior                  | `ux-design.md`, `ui-components.md`                            |
+| Wireframes, mockups, prototypes, design approval before UI build            | `ui-mock-approval.md`, `ui-components.md`                     |
 | SQL, ORM, query builders, indexes, relationships, database performance      | `database.md`                                                 |
 | Schema changes, migrations, seed data, destructive changes                  | `database.md`, `migrations.md`                                |
 | New or modified API endpoint                                                | `api-design.md`, `data-modeling.md`                           |
@@ -99,6 +114,11 @@ All rows are additive to the baseline skills. For non-trivial tasks, load `secur
 
 | Task type                       | Load these additional skills                                                                                                                                                                                    |
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Major feature with multiple workstreams | `agent-team.md`, plus the implementation, testing, documentation, and review skills matching the feature area                                                                                             |
+| New product or application idea | `project-planning.md`, `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `task-breakdown.md`, `task-assignment.md`, `documentation.md`, plus implementation skills after approval               |
+| User-facing major feature       | `project-planning.md`, `ux-design.md`, `ui-mock-approval.md`, `task-breakdown.md`, plus implementation, testing, and documentation skills matching the feature area                                           |
+| Visual redesign or new brand    | `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `ui-components.md`, `documentation.md`                                                                                                             |
+| Broad debugging or refactoring  | `agent-team.md`, `testing.md`, plus the skills matching each affected area                                                                                                                                       |
 | Payment flow                    | `external-integrations.md`, `api-design.md`, `observability.md`, `background-jobs.md` if async processing or retries are involved                                                                               |
 | Subscription or feature gating  | `data-modeling.md`, `api-design.md` if endpoints change, `caching.md` if access state is cached                                                                                                                 |
 | Admin dashboard or admin action | `ui-components.md`, `observability.md`, `api-design.md` if endpoints change                                                                                                                                     |
@@ -122,6 +142,12 @@ Use this section to avoid duplicated or conflicting guidance between skills.
 | -------------------------------------------------- | -------------------------- | ---------------------------------------------------------------- |
 | Server-side authorization and ownership checks     | `security.md`              | `api-design.md`, `database.md`, `ui-components.md`               |
 | Module contracts and invariants                    | `modules.md`               | `documentation.md`, `api-design.md`, `data-modeling.md`          |
+| Project plan, MVP scope, milestones, and success criteria | `project-planning.md` | `documentation.md`, `task-breakdown.md`, `modules.md`            |
+| Implementation task shape and acceptance criteria  | `task-breakdown.md`        | `project-planning.md`, `task-assignment.md`, `testing.md`        |
+| Assignment ownership and delegated work boundaries | `task-assignment.md`       | `agent-team.md`, `modules.md`, `testing.md`, `documentation.md`  |
+| Brand identity, voice, visual tokens, and approval | `brand-identity.md`        | `ux-design.md`, `ui-mock-approval.md`, `ui-components.md`        |
+| User workflows, navigation, states, and accessibility flow | `ux-design.md`      | `ui-mock-approval.md`, `ui-components.md`, `security.md`         |
+| Wireframes, mock approvals, prototypes, generated mock references | `ui-mock-approval.md` | `brand-identity.md`, `ux-design.md`, `ui-components.md`          |
 | Query mechanics and database access                | `database.md`              | `performance.md`, `security.md`, `data-modeling.md`              |
 | Schema evolution and production data safety        | `migrations.md`            | `database.md`, `data-modeling.md`, `documentation.md`            |
 | API request/response contracts                     | `api-design.md`            | `data-modeling.md`, `security.md`, `testing.md`                  |
@@ -145,8 +171,56 @@ Reusable templates live in `/.agents/templates/`.
 | Template        | File                                    | Use for                                                                                                |
 | --------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | ADR             | `/.agents/templates/adr.md`             | Significant project decisions. Completed ADRs must be stored in `/adr/`.                               |
+| Codex Agent     | `/.agents/templates/codex-agent.toml`   | Project-scoped or global Codex custom agent TOML files.                                                |
 | Module README   | `/.agents/templates/module-readme.md`   | Major modules, feature areas, and business capabilities. Completed READMEs live inside module folders. |
 | Project Context | `/.agents/templates/project-context.md` | Root-level `PROJECT_CONTEXT.md`.                                                                       |
+| Project Plan    | `/.agents/templates/project-plan.md`    | Approved product, feature, MVP, milestone, architecture direction, risk, and success-criteria plans.   |
+| Task Breakdown  | `/.agents/templates/task-breakdown.md`  | Implementation-ready task lists with dependencies, acceptance criteria, verification, and doc impact.  |
+| Task Assignment | `/.agents/templates/task-assignment.md` | Owner, scope, boundary, expected-output, coordination, and verification briefs for assigned work.       |
+| Brand Identity Kit | `/.agents/templates/brand-identity-kit.md` | Product identity, tone, visual token, imagery, chart, and accessibility direction before mock design. |
+| UX Design Brief | `/.agents/templates/ux-design-brief.md` | User journeys, onboarding, flows, states, privacy moments, notifications, and accessibility direction. |
+| UI Mock Approval | `/.agents/templates/ui-mock-approval.md` | Design approval records for mock artifacts, responsive layouts, interaction states, data states, and implementation notes. |
+
+---
+
+## Local Tools
+
+Optional local utilities live in `/tools/`.
+
+| Tool | Path | Use for |
+| --- | --- | --- |
+| Project Onboarding Wizard | `/tools/project-onboarding-wizard/index.html` | Browser-based collection of project context, source documents, planning, brand, UX, mock approval, task, assignment, and ADR details with Markdown preview and file generation. |
+
+Generated project-specific planning artifacts should live in `/ProjectDocs/` or another project documentation location, not inside `/.agents/`. Uploaded source documents such as PRDs, specs, briefs, research, and design references should live under `/ProjectDocs/Source/`.
+
+---
+
+## Optional Codex Agent Pack
+
+Project-scoped Codex custom agents live in:
+
+```txt
+/.codex/agents/
+```
+
+These agents are optional execution helpers for Codex subagent workflows. They do not replace `/AGENTS.md`, `/.agents/INDEX.md`, `PROJECT_CONTEXT.md`, or the skill files.
+
+Default starter agents:
+
+| Agent | Sandbox | Purpose |
+| --- | --- | --- |
+| `agent-organizer` | `read-only` | Plan safe delegation for broad tasks. |
+| `api-contract-reviewer` | `read-only` | Review API contracts, DTOs, compatibility, and errors. |
+| `code-mapper` | `read-only` | Map code paths and ownership boundaries before edits. |
+| `database-migration-reviewer` | `read-only` | Review schema, migration, rollback, and data-preservation risks. |
+| `documentation-maintainer` | `workspace-write` | Update assigned documentation files after decisions are clear. |
+| `performance-reviewer` | `read-only` | Review scalability, query load, caching fit, and bounded work. |
+| `security-reviewer` | `read-only` | Review authorization, validation, secrets, uploads, webhooks, and sensitive data paths. |
+| `test-strategist` | `read-only` | Identify regression coverage and verification gaps. |
+
+Use `/.agents/templates/codex-agent.toml` when creating new agents.
+
+Keep read-only as the default for review, mapping, research, and planning agents. Use `workspace-write` only when the agent must edit files and can be given a narrow write scope.
 
 ---
 

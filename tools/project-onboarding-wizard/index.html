@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Governance Onboarding Wizard</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f766e'/%3E%3Cpath d='M10 11h12M10 16h7M10 21h12' stroke='white' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Wizard progress">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M8 12a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V12Z" fill="#0f766e"></path>
+            <path d="M16 17h16M16 24h10M16 31h16" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"></path>
+          </svg>
+          <div>
+            <p class="brand-title">Governance Onboarding</p>
+            <p class="brand-subtitle">Project artifacts</p>
+          </div>
+        </div>
+
+        <nav class="step-list" aria-label="Steps">
+          <button class="step-tab is-active" type="button" data-step-target="0">
+            <span class="step-number">1</span>
+            <span>Basics</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="1">
+            <span class="step-number">2</span>
+            <span>Documents</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="2">
+            <span class="step-number">3</span>
+            <span>Scope</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="3">
+            <span class="step-number">4</span>
+            <span>Technical</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="4">
+            <span class="step-number">5</span>
+            <span>Brand and UX</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="5">
+            <span class="step-number">6</span>
+            <span>Execution</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="6">
+            <span class="step-number">7</span>
+            <span>Preview</span>
+          </button>
+        </nav>
+
+        <div class="progress-panel" aria-live="polite">
+          <div class="progress-row">
+            <span>Completion</span>
+            <strong id="completionLabel">0%</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span id="completionBar"></span>
+          </div>
+          <p class="safe-note">No network calls. Avoid secrets.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <h1>Project onboarding wizard</h1>
+            <p>Generate the first context, planning, design, and task artifacts for a governed software project.</p>
+          </div>
+          <div class="status-strip" aria-label="Draft status">
+            <span class="status-pill" id="autosaveStatus">Draft saved locally</span>
+            <span class="status-pill status-pill-strong" id="fileAccessStatus">Folder not selected</span>
+          </div>
+        </header>
+
+        <form id="wizardForm" class="wizard-form">
+          <section class="step-panel is-active" data-step="0" aria-labelledby="basicsTitle">
+            <div class="panel-heading">
+              <h2 id="basicsTitle">Project Basics</h2>
+              <p>Core identity and problem framing.</p>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>Project name</span>
+                <input name="projectName" autocomplete="off" placeholder="Fitness Journey Tracker">
+              </label>
+              <label>
+                <span>Owner or organization</span>
+                <input name="owner" autocomplete="off" placeholder="CrespiRe / Software Factory">
+              </label>
+              <label>
+                <span>Current status</span>
+                <select name="currentStatus">
+                  <option value="">Select status</option>
+                  <option>Idea</option>
+                  <option>Discovery</option>
+                  <option>Prototype</option>
+                  <option>MVP build</option>
+                  <option>Production</option>
+                  <option>Maintenance</option>
+                </select>
+              </label>
+              <label>
+                <span>Application type</span>
+                <input name="appType" autocomplete="off" placeholder="Web application">
+              </label>
+            </div>
+
+            <label>
+              <span>Primary users</span>
+              <textarea name="users" rows="3" placeholder="People tracking workouts, weight, health integrations, and habits."></textarea>
+            </label>
+            <label>
+              <span>Project summary</span>
+              <textarea name="summary" rows="3" placeholder="A concise description of what this project is."></textarea>
+            </label>
+            <label>
+              <span>Problem statement</span>
+              <textarea name="problem" rows="4" placeholder="The problem this project solves."></textarea>
+            </label>
+            <label>
+              <span>Solution overview</span>
+              <textarea name="solution" rows="4" placeholder="How the product or system will address the problem."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="1" aria-labelledby="documentsTitle">
+            <div class="panel-heading">
+              <h2 id="documentsTitle">Project Documents</h2>
+              <p>Add PRDs, briefs, specs, research notes, or other source documents for the project manager agent to review before planning tasks.</p>
+            </div>
+
+            <div class="upload-zone">
+              <label class="upload-label">
+                <span>Upload source documents</span>
+                <input id="sourceDocsInput" type="file" multiple accept=".md,.markdown,.txt,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.csv,.json,.yaml,.yml,.png,.jpg,.jpeg,.webp">
+              </label>
+              <p>Selected files are copied to <strong>ProjectDocs/Source/</strong> only when you write files to a chosen project folder. The wizard does not upload them anywhere.</p>
+            </div>
+
+            <div class="doc-list-panel">
+              <div class="doc-list-heading">
+                <h3>Selected documents</h3>
+                <button class="ghost-button" type="button" id="clearSourceDocsButton">Clear documents</button>
+              </div>
+              <ul id="sourceDocsList" class="source-doc-list" aria-live="polite">
+                <li>No source documents selected.</li>
+              </ul>
+            </div>
+
+            <label>
+              <span>Document review notes</span>
+              <textarea name="documentNotes" rows="5" placeholder="Summarize any key PRD decisions, constraints, or places the project manager should inspect first."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="2" aria-labelledby="scopeTitle">
+            <div class="panel-heading">
+              <h2 id="scopeTitle">Scope and Workflows</h2>
+              <p>MVP boundaries, workflows, risks, and success criteria.</p>
+            </div>
+
+            <label>
+              <span>Product goal</span>
+              <textarea name="productGoal" rows="3" placeholder="The outcome this project should create."></textarea>
+            </label>
+            <label>
+              <span>Core workflows</span>
+              <textarea name="workflows" rows="5" placeholder="Log a workout&#10;Review weekly progress&#10;Connect a health provider"></textarea>
+            </label>
+            <div class="split-grid">
+              <label>
+                <span>MVP scope</span>
+                <textarea name="mvpScope" rows="6" placeholder="Features included in the first release."></textarea>
+              </label>
+              <label>
+                <span>Out of scope</span>
+                <textarea name="outOfScope" rows="6" placeholder="Features intentionally excluded for now."></textarea>
+              </label>
+            </div>
+            <div class="split-grid">
+              <label>
+                <span>Success criteria</span>
+                <textarea name="successCriteria" rows="5" placeholder="Observable or measurable outcomes."></textarea>
+              </label>
+              <label>
+                <span>Assumptions</span>
+                <textarea name="assumptions" rows="5" placeholder="Assumptions that must hold true."></textarea>
+              </label>
+            </div>
+            <label>
+              <span>Risks</span>
+              <textarea name="risks" rows="4" placeholder="Product, security, data, integration, performance, delivery, or UX risks."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="3" aria-labelledby="technicalTitle">
+            <div class="panel-heading">
+              <h2 id="technicalTitle">Technical, Security, and Data</h2>
+              <p>Architecture, ownership, privacy, integrations, and environment needs.</p>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>Technology stack</span>
+                <input name="stack" autocomplete="off" placeholder="ASP.NET Core, React, PostgreSQL">
+              </label>
+              <label>
+                <span>Database</span>
+                <input name="database" autocomplete="off" placeholder="PostgreSQL">
+              </label>
+              <label>
+                <span>Authentication model</span>
+                <input name="authModel" autocomplete="off" placeholder="Email/password, OAuth, SSO, single-user">
+              </label>
+              <label>
+                <span>Deployment target</span>
+                <input name="deployment" autocomplete="off" placeholder="Azure App Service, Vercel, Docker, local only">
+              </label>
+            </div>
+
+            <label>
+              <span>User roles</span>
+              <textarea name="roles" rows="4" placeholder="User&#10;Admin&#10;Coach"></textarea>
+            </label>
+            <label>
+              <span>Data ownership model</span>
+              <textarea name="dataOwnership" rows="4" placeholder="Who owns which records and how access should be scoped."></textarea>
+            </label>
+            <label>
+              <span>Sensitive data</span>
+              <textarea name="sensitiveData" rows="4" placeholder="Health data, weight entries, OAuth tokens, notes, billing data."></textarea>
+            </label>
+            <label>
+              <span>Retention, export, and deletion</span>
+              <textarea name="retention" rows="4" placeholder="Expected data retention, export, correction, and delete-my-data behavior."></textarea>
+            </label>
+            <label>
+              <span>External integrations</span>
+              <textarea name="integrations" rows="4" placeholder="Apple Health, Google Fit, Fitbit, Stripe, email provider, storage provider."></textarea>
+            </label>
+            <label>
+              <span>Configuration needs</span>
+              <textarea name="configNeeds" rows="4" placeholder="Environment variables or feature flags using placeholder names only."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="4" aria-labelledby="brandUxTitle">
+            <div class="panel-heading">
+              <h2 id="brandUxTitle">Brand and UX</h2>
+              <p>Identity, tone, accessibility, journeys, states, and mock readiness.</p>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>Brand or product name</span>
+                <input name="brandName" autocomplete="off" placeholder="Use project name if undecided">
+              </label>
+              <label>
+                <span>Mobile priority</span>
+                <select name="mobilePriority">
+                  <option value="">Select priority</option>
+                  <option>Mobile-first</option>
+                  <option>Desktop-first</option>
+                  <option>Equal desktop and mobile</option>
+                  <option>Desktop only for MVP</option>
+                </select>
+              </label>
+              <label>
+                <span>Image Gen readiness</span>
+                <select name="imageGenReadiness">
+                  <option value="">Select readiness</option>
+                  <option>Brand kit must be approved first</option>
+                  <option>Ready for generated mock concepts after approval</option>
+                  <option>Skip generated mocks for now</option>
+                </select>
+              </label>
+              <label>
+                <span>Approval status</span>
+                <select name="approvalStatus">
+                  <option>Draft</option>
+                  <option>Approved</option>
+                  <option>Needs revision</option>
+                  <option>Skipped by user</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>Tone and voice</span>
+              <textarea name="tone" rows="4" placeholder="Calm, precise, motivating, clinical, playful, premium, utilitarian."></textarea>
+            </label>
+            <div class="split-grid">
+              <label>
+                <span>Color direction</span>
+                <textarea name="colorDirection" rows="5" placeholder="Palette direction and usage roles."></textarea>
+              </label>
+              <label>
+                <span>Typography direction</span>
+                <textarea name="typography" rows="5" placeholder="Type personality, density, hierarchy, and readability."></textarea>
+              </label>
+            </div>
+            <label>
+              <span>Imagery and icon style</span>
+              <textarea name="imagery" rows="4" placeholder="Photography, product imagery, generated imagery, icons, charts."></textarea>
+            </label>
+            <label>
+              <span>Accessibility expectations</span>
+              <textarea name="accessibility" rows="4" placeholder="Contrast, keyboard navigation, screen reader support, reduced motion, readable charts."></textarea>
+            </label>
+            <div class="split-grid">
+              <label>
+                <span>Primary journey</span>
+                <textarea name="primaryJourney" rows="6" placeholder="The main repeated user flow."></textarea>
+              </label>
+              <label>
+                <span>Secondary journeys</span>
+                <textarea name="secondaryJourney" rows="6" placeholder="Supporting flows such as onboarding, settings, export, delete, integrations."></textarea>
+              </label>
+            </div>
+            <label>
+              <span>Important states</span>
+              <textarea name="states" rows="4" placeholder="Empty, loading, success, error, validation, permission, sync failure, offline."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="5" aria-labelledby="executionTitle">
+            <div class="panel-heading">
+              <h2 id="executionTitle">Execution Readiness</h2>
+              <p>Milestones, initial tasks, assignments, and open questions.</p>
+            </div>
+
+            <label>
+              <span>Milestones</span>
+              <textarea name="milestones" rows="5" placeholder="Discovery approval&#10;MVP foundation&#10;First user workflow&#10;Integration hardening"></textarea>
+            </label>
+            <label>
+              <span>Initial implementation tasks</span>
+              <textarea name="initialTasks" rows="7" placeholder="Set up authentication and user ownership&#10;Create workout logging module&#10;Add dashboard summary"></textarea>
+            </label>
+            <label>
+              <span>Task assignments</span>
+              <textarea name="assignments" rows="6" placeholder="Frontend owner: dashboard and forms&#10;Backend owner: API, validation, persistence&#10;Reviewer: security and ownership checks"></textarea>
+            </label>
+            <label>
+              <span>Open questions</span>
+              <textarea name="openQuestions" rows="6" placeholder="Which health provider is first?&#10;Is the MVP single-user or multi-user?"></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel preview-panel" data-step="6" aria-labelledby="previewTitle">
+            <div class="panel-heading">
+              <h2 id="previewTitle">Preview and Write</h2>
+              <p>Select files, inspect Markdown, then download or write to a chosen folder.</p>
+            </div>
+
+            <div class="output-layout">
+              <div class="output-controls">
+                <fieldset>
+                  <legend>Generated files</legend>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="projectContext" checked>
+                    <span>PROJECT_CONTEXT.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="projectPlan" checked>
+                    <span>ProjectDocs/project-plan.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="brandKit" checked>
+                    <span>ProjectDocs/brand-identity-kit.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="uxBrief" checked>
+                    <span>ProjectDocs/ux-design-brief.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="uiMock" checked>
+                    <span>ProjectDocs/ui-mock-approval.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="taskBreakdown" checked>
+                    <span>ProjectDocs/task-breakdown.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="taskAssignment" checked>
+                    <span>ProjectDocs/task-assignment.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="sourceDocs" checked>
+                    <span>ProjectDocs/Source/uploaded documents</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="adr">
+                    <span>adr/0001-use-agent-governance-pack.md</span>
+                  </label>
+                </fieldset>
+
+                <div class="file-actions">
+                  <button class="secondary-button" type="button" id="chooseFolderButton">Choose folder</button>
+                  <button class="primary-button" type="button" id="writeFilesButton">Write selected</button>
+                  <button class="secondary-button" type="button" id="downloadFilesButton">Download selected</button>
+                  <button class="ghost-button" type="button" id="copyPreviewButton">Copy preview</button>
+                </div>
+                <p class="action-status" id="actionStatus" role="status"></p>
+              </div>
+
+              <div class="preview-surface">
+                <div class="preview-tabs" aria-label="Preview file">
+                  <button class="preview-tab is-active" type="button" data-preview="projectContext">Context</button>
+                  <button class="preview-tab" type="button" data-preview="projectPlan">Plan</button>
+                  <button class="preview-tab" type="button" data-preview="brandKit">Brand</button>
+                  <button class="preview-tab" type="button" data-preview="uxBrief">UX</button>
+                  <button class="preview-tab" type="button" data-preview="uiMock">Mock</button>
+                  <button class="preview-tab" type="button" data-preview="taskBreakdown">Tasks</button>
+                  <button class="preview-tab" type="button" data-preview="taskAssignment">Assign</button>
+                  <button class="preview-tab" type="button" data-preview="adr">ADR</button>
+                </div>
+                <pre id="markdownPreview" tabindex="0"></pre>
+              </div>
+            </div>
+          </section>
+
+          <div class="form-footer">
+            <button class="secondary-button" type="button" id="backButton">Back</button>
+            <button class="primary-button" type="button" id="nextButton">Next</button>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
