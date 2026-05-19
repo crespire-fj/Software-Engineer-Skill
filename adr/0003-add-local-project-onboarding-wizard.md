@@ -2,7 +2,7 @@
 
 ## Status
 
-Status: Accepted
+Status: Superseded
 
 ## Date
 
@@ -88,3 +88,4 @@ None.
 
 ## Superseded By
 
+* ADR 0004: Add ProjectDocs Source Document Intake

@@ -44,6 +44,7 @@ The project manager agent owns task intake, context loading, scope control, dele
 The project manager should:
 
 * read the required project guidance first
+* inspect `/ProjectDocs/` when present, especially `/ProjectDocs/Source/` for PRDs, specs, briefs, research notes, and design references before planning or assigning work
 * identify task signals and required skills
 * decide whether a team workflow is useful
 * split only work that can be safely bounded
@@ -77,6 +78,7 @@ Every delegated task should include:
 * goal
 * assigned role or concern
 * relevant files, modules, or boundaries
+* source documents or ProjectDocs artifacts the subagent should consider
 * required skill files
 * explicit in-scope and out-of-scope work
 * expected output
@@ -105,6 +107,8 @@ Before accepting subagent output, the project manager should check:
 Do enough initial context gathering to understand the task shape before creating subagent work.
 
 Delegation should reduce risk or context pressure. It should not happen before the project manager knows what decisions are needed and which work can be safely isolated.
+
+If `/ProjectDocs/Source/` contains PRDs, specs, briefs, research, or design references, review the relevant documents before shaping the delegated work.
 
 ### Pattern: Assign Concerns, Not Vague Ownership
 
@@ -147,6 +151,7 @@ The project manager should run the relevant checks, inspect documentation impact
 ## Common Mistakes
 
 * Creating subagents before understanding the task.
+* Assigning or delegating work before reviewing relevant source documents in `/ProjectDocs/Source/`.
 * Delegating vague work with no boundary or expected output.
 * Splitting one tightly coupled change across multiple agents.
 * Allowing duplicate implementations of the same behavior.
@@ -165,6 +170,7 @@ The project manager should run the relevant checks, inspect documentation impact
 Stop and ask before using or continuing a team workflow if:
 
 * permission behavior is unclear
+* source documents conflict with each other, the project plan, or the proposed assignment scope
 * module ownership is unclear
 * public contracts may change and affected consumers are unclear
 * destructive data changes may be required

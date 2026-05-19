@@ -22,6 +22,10 @@ Files, modules, or responsibilities in scope:
 
 Files, modules, or responsibilities out of scope:
 
+## Source Documents
+
+List PRDs, specs, briefs, research notes, design references, or generated `ProjectDocs` files the owner must review.
+
 ## Required Skills
 
 List required skill files.

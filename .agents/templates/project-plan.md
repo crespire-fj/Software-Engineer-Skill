@@ -16,6 +16,10 @@ Date:
 
 Describe the outcome this project or feature should create.
 
+## Source Documents Reviewed
+
+List PRDs, specs, briefs, research notes, design references, or other files reviewed from `/ProjectDocs/Source/`.
+
 ## Target Users
 
 Describe the primary users and any important secondary users.

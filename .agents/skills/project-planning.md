@@ -17,7 +17,8 @@ Violating these rules blocks completion.
 3. Do not treat a project plan as approved unless the user has approved it or explicitly asked to proceed without approval.
 4. Planning must identify security, data, integration, performance, documentation, testing, and UX implications at a useful level.
 5. MVP scope, out-of-scope items, assumptions, risks, and dependencies must be explicit.
-6. If the plan requires a significant architecture, data, integration, or product-structure decision, document it with an ADR when appropriate.
+6. Review relevant source documents in `/ProjectDocs/Source/` when they exist before drafting or revising the project plan.
+7. If the plan requires a significant architecture, data, integration, or product-structure decision, document it with an ADR when appropriate.
 
 ---
 
@@ -27,6 +28,7 @@ Violating these rules blocks completion.
 
 A project plan should define:
 
+* source documents reviewed
 * product goal
 * target users and primary jobs-to-be-done
 * core user workflows
@@ -57,6 +59,12 @@ If the user explicitly asks to proceed without approval, record that assumption 
 
 Use the project plan to turn that context into a delivery direction. Update `PROJECT_CONTEXT.md` only when durable product, business, architecture, integration, or constraint information changes.
 
+### Source Documents
+
+When `/ProjectDocs/Source/` exists, inspect relevant PRDs, briefs, specs, research notes, design references, and decision documents before planning.
+
+The plan should list which source documents were reviewed and call out conflicts, gaps, assumptions, or decisions that require user approval.
+
 ---
 
 ## Patterns
@@ -85,6 +93,7 @@ Examples include sensitive data, third-party API uncertainty, authentication req
 
 * Jumping from idea directly to code.
 * Treating a generated plan as user-approved.
+* Ignoring PRDs, specs, briefs, or research files under `/ProjectDocs/Source/`.
 * Hiding assumptions inside implementation details.
 * Defining modules before understanding user workflows.
 * Ignoring privacy, data ownership, and integration risks during planning.
@@ -98,6 +107,7 @@ Examples include sensitive data, third-party API uncertainty, authentication req
 Stop and ask before proceeding if:
 
 * the product goal is unclear
+* source documents conflict with each other or with `PROJECT_CONTEXT.md`
 * the target users or primary workflows are unclear
 * MVP scope cannot be separated from later scope
 * privacy, data ownership, or permission expectations are unclear

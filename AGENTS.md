@@ -1,7 +1,7 @@
 # AGENTS.md
 
-Version: 1.1
-Last updated: 2026-05-19
+Version: 1.2
+Last updated: 2026-05-20
 
 ## Purpose
 
@@ -39,17 +39,18 @@ For every task:
 1. Read this `AGENTS.md`.
 2. Read `/.agents/INDEX.md` if it exists. If it does not exist or is incomplete, use the routing table in this file.
 3. For any non-trivial task, read `PROJECT_CONTEXT.md` before planning. If `PROJECT_CONTEXT.md` is missing and the task requires business, product, architectural, integration, data, or security context, stop and ask. Only skip `PROJECT_CONTEXT.md` for true micro-edits such as typos, comments, or static copy that do not affect behavior.
-4. Identify task signals and load the relevant files from `/.agents/skills/`.
-5. Always load `security.md` and `modules.md` when they exist. These are the default baseline skills.
-6. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation flow before coding: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment. Do not skip required approval points unless the user explicitly approves skipping them.
-7. Inspect existing implementation patterns before changing code.
-8. State which skills were loaded and why. If a seemingly relevant skill is not loaded, state why not.
-9. Make the smallest safe change that satisfies the request.
-10. Preserve existing behavior unless the task explicitly requires changing it.
-11. Verify security, data, performance, and documentation impact.
-12. Update relevant documentation, templates, module READMEs, or ADRs where required.
-13. Run existing tests or checks where available. If tests cannot be run, state why.
-14. Summarize what changed, what was checked, documentation updated, ADRs added or updated, and any risks or follow-up work.
+4. For broad ideas, new products, major features, planning, task breakdown, or task assignment, inspect `/ProjectDocs/` when it exists. Project manager agents must review relevant documents in `/ProjectDocs/Source/` such as PRDs, specs, briefs, research notes, or design references before creating plans, breaking down tasks, or assigning work.
+5. Identify task signals and load the relevant files from `/.agents/skills/`.
+6. Always load `security.md` and `modules.md` when they exist. These are the default baseline skills.
+7. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation flow before coding: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment. Do not skip required approval points unless the user explicitly approves skipping them.
+8. Inspect existing implementation patterns before changing code.
+9. State which skills were loaded and why. If a seemingly relevant skill is not loaded, state why not.
+10. Make the smallest safe change that satisfies the request.
+11. Preserve existing behavior unless the task explicitly requires changing it.
+12. Verify security, data, performance, and documentation impact.
+13. Update relevant documentation, templates, module READMEs, or ADRs where required.
+14. Run existing tests or checks where available. If tests cannot be run, state why.
+15. Summarize what changed, what was checked, documentation updated, ADRs added or updated, and any risks or follow-up work.
 
 ---
 
@@ -106,6 +107,7 @@ When drafting or updating `security.md`, include public-form-specific controls s
 
 | Task signal                                                             | Load these additional skills                             |
 | ----------------------------------------------------------------------- | -------------------------------------------------------- |
+| PRD, spec, brief, research, design reference, or source document review | `project-planning.md`, `documentation.md`                |
 | New project idea, product brief, MVP, roadmap, or broad feature plan    | `project-planning.md`, `documentation.md`                |
 | Task planning, backlog shaping, implementation slicing                  | `task-breakdown.md`, `testing.md`                        |
 | Assigning work to agents, subagents, contributors, or parallel streams  | `task-assignment.md`                                     |
@@ -156,6 +158,7 @@ Stop and ask before proceeding if:
 * the task requires destructive database changes
 * the task could affect production data
 * the request conflicts with existing code or documentation
+* source documents in `/ProjectDocs/Source/` conflict with `PROJECT_CONTEXT.md`, an approved plan, or the requested task scope
 * the task changes a public API contract
 * the task changes payment, subscription, authentication, or authorization behavior
 * the task requires choosing between multiple architectural approaches
@@ -178,6 +181,7 @@ A task is complete only when:
 
 * the requested scope is implemented
 * relevant skill files were loaded and followed
+* relevant source documents in `/ProjectDocs/Source/` were reviewed before planning, task breakdown, task assignment, or implementation when they exist
 * required project plan, task breakdown, task assignment, brand, UX, and UI mock approval steps were completed or explicitly skipped by the user
 * existing behavior is preserved unless intentionally changed
 * server-side authorization is enforced where required
@@ -225,6 +229,16 @@ Expected structure:
   PROJECT_CONTEXT.md
   README.md
   .env.example
+
+/ProjectDocs
+  /Source
+    project-brief-or-prd.pdf
+  project-plan.md
+  brand-identity-kit.md
+  ux-design-brief.md
+  ui-mock-approval.md
+  task-breakdown.md
+  task-assignment.md
 
 /.agents
   INDEX.md

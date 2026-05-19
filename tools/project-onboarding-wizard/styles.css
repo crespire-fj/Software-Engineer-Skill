@@ -381,6 +381,80 @@ fieldset {
   font-weight: 650;
 }
 
+.upload-zone {
+  border: 1px dashed #aebcb5;
+  border-radius: var(--radius);
+  background: #f8fbfa;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.upload-zone p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.upload-label {
+  margin-bottom: 0;
+}
+
+.upload-label input {
+  background: #fff;
+}
+
+.doc-list-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 18px;
+  background: #fff;
+}
+
+.doc-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.doc-list-heading h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.source-doc-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.source-doc-list li {
+  min-width: 0;
+  border: 1px solid #e4ebe7;
+  border-radius: var(--radius);
+  background: #fbfcfb;
+  padding: 10px 12px;
+  display: grid;
+  gap: 3px;
+}
+
+.source-doc-list strong,
+.source-doc-list span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.source-doc-list span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .file-actions {
   display: grid;
   grid-template-columns: 1fr;

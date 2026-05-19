@@ -13,7 +13,7 @@ It is designed to help developers and AI agents work safely, consistently, and m
 * project context templates
 * project planning, task breakdown, and task assignment workflows
 * brand identity, UX design, and UI mock approval workflows
-* a local onboarding wizard for generating first-draft project artifacts
+* a local onboarding wizard for collecting source documents and generating first-draft project artifacts
 * safe development workflows
 * stop-and-ask criteria for risky or ambiguous work
 
@@ -59,6 +59,16 @@ Add this governance pack to a software project using the following structure:
   PROJECT_CONTEXT.md
   README.md
   .env.example
+
+/ProjectDocs
+  /Source
+    project-brief-or-prd.pdf
+  project-plan.md
+  brand-identity-kit.md
+  ux-design-brief.md
+  ui-mock-approval.md
+  task-breakdown.md
+  task-assignment.md
 
 /.agents
   INDEX.md
@@ -132,6 +142,7 @@ Add this governance pack to a software project using the following structure:
 | `/.agents/templates/` | Reusable templates for ADRs, Codex agents, module READMEs, context, plans, tasks, assignments, brand, UX, and mock approvals. |
 | `/.codex/agents/`     | Optional project-scoped Codex custom agents built from the governance rules. |
 | `/adr/`               | Architecture Decision Records for project decisions.                         |
+| `/ProjectDocs/`       | Project-specific source documents, planning artifacts, design approvals, task breakdowns, and assignments. |
 | `/scripts/`           | Maintenance and validation scripts for the pack.                             |
 | `/tools/`             | Optional local utilities such as the project onboarding wizard.              |
 | `PROJECT_CONTEXT.md`  | Root-level project overview and constraints.                                 |
@@ -195,19 +206,20 @@ For every non-trivial task, an agent should:
 1. Read `AGENTS.md`.
 2. Read `/.agents/INDEX.md` if available.
 3. Read `PROJECT_CONTEXT.md` unless the task is a true micro-edit.
-4. Identify task signals.
-5. Load the baseline skills:
+4. For planning, task breakdown, task assignment, or broad feature work, inspect `ProjectDocs/` when it exists, especially `ProjectDocs/Source/`.
+5. Identify task signals.
+6. Load the baseline skills:
 
    * `security.md`
    * `modules.md`
-6. Load any additional skills required by the task.
-7. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation steps: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment.
-8. Declare which skills were loaded and why.
-9. Inspect existing implementation patterns.
-10. Make the smallest safe change.
-11. Verify tests, security, data impact, and documentation impact.
-12. Update module READMEs, `.env.example`, or ADRs where required.
-13. Summarize what changed, what was checked, and any risks.
+7. Load any additional skills required by the task.
+8. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation steps: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment.
+9. Declare which skills were loaded and why.
+10. Inspect existing implementation patterns.
+11. Make the smallest safe change.
+12. Verify tests, security, data impact, and documentation impact.
+13. Update module READMEs, `.env.example`, or ADRs where required.
+14. Summarize what changed, what was checked, and any risks.
 
 ---
 
@@ -272,22 +284,25 @@ This repository includes a dependency-free local wizard at:
 /tools/project-onboarding-wizard/index.html
 ```
 
-Open it directly in a browser to collect project context, planning, brand, UX, mock approval, task, and assignment details. The wizard previews generated Markdown and can either download selected files or write them into a selected project folder when the browser supports local folder access.
+Open it directly in a browser to collect project context, source documents such as PRDs and specs, planning, brand, UX, mock approval, task, and assignment details. The wizard previews generated Markdown and can either download selected files or write them into a selected project folder when the browser supports local folder access.
 
 Generated project-specific artifacts are written to:
 
 ```txt
 /PROJECT_CONTEXT.md
-/project-docs/project-plan.md
-/project-docs/brand-identity-kit.md
-/project-docs/ux-design-brief.md
-/project-docs/ui-mock-approval.md
-/project-docs/task-breakdown.md
-/project-docs/task-assignment.md
+/ProjectDocs/Source/<uploaded-files>
+/ProjectDocs/project-plan.md
+/ProjectDocs/brand-identity-kit.md
+/ProjectDocs/ux-design-brief.md
+/ProjectDocs/ui-mock-approval.md
+/ProjectDocs/task-breakdown.md
+/ProjectDocs/task-assignment.md
 /adr/0001-use-agent-governance-pack.md
 ```
 
-`/.agents/` remains reserved for agent operating rules, reusable skills, and reusable templates. Planning outputs for a specific project should live in `project-docs/` or another project documentation location.
+`/.agents/` remains reserved for agent operating rules, reusable skills, and reusable templates. Planning outputs and uploaded source documents for a specific project should live in `ProjectDocs/` or another project documentation location.
+
+For planning and delegation work, project manager agents should inspect `ProjectDocs/` when it exists. Source documents under `ProjectDocs/Source/` must be reviewed before creating project plans, task breakdowns, or task assignments.
 
 ---
 
@@ -537,7 +552,7 @@ At a high level, this pack enforces these principles:
 4. Copy selected settings from `/.codex/config.example.toml` into the project's own `/.codex/config.toml` if needed.
 5. Create `/adr/` at the project root.
 6. Create `PROJECT_CONTEXT.md` using `/.agents/templates/project-context.md`.
-7. Optionally open `/tools/project-onboarding-wizard/index.html` to generate first-draft `PROJECT_CONTEXT.md`, `project-docs/*`, and ADR files.
+7. Optionally open `/tools/project-onboarding-wizard/index.html` to generate first-draft `PROJECT_CONTEXT.md`, `ProjectDocs/*`, source-document copies, and ADR files.
 8. Use the planning, brand, UX, mock approval, task breakdown, and assignment templates when taking broad ideas into implementation.
 9. Add module READMEs for major modules using `/.agents/templates/module-readme.md`.
 10. Update `.env.example` if the project uses environment variables.
@@ -648,6 +663,7 @@ Before making significant changes, developers should also read:
 
 * `AGENTS.md`
 * `PROJECT_CONTEXT.md`
+* relevant files under `ProjectDocs/`
 * relevant module README
 * relevant skill files
 * relevant ADRs
@@ -663,7 +679,7 @@ This governance pack currently includes:
 * root `AGENTS.md`
 * skill index
 * 22 skill files
-* local project onboarding wizard
+* local project onboarding wizard with source document intake
 * ADR template
 * Codex custom agent template
 * module README template
@@ -671,6 +687,6 @@ This governance pack currently includes:
 * project plan, task breakdown, task assignment, brand identity kit, UX brief, and UI mock approval templates
 * 8 project-scoped Codex custom agents
 * validation script
-* accepted ADRs for the Codex subagent starter pack, pre-implementation planning/design workflow, and onboarding wizard
+* ADRs for the Codex subagent starter pack, pre-implementation planning/design workflow, onboarding wizard, and ProjectDocs source document intake
 
 It is ready to be added to software projects and refined through real project use.

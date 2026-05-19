@@ -28,22 +28,26 @@
           </button>
           <button class="step-tab" type="button" data-step-target="1">
             <span class="step-number">2</span>
-            <span>Scope</span>
+            <span>Documents</span>
           </button>
           <button class="step-tab" type="button" data-step-target="2">
             <span class="step-number">3</span>
-            <span>Technical</span>
+            <span>Scope</span>
           </button>
           <button class="step-tab" type="button" data-step-target="3">
             <span class="step-number">4</span>
-            <span>Brand and UX</span>
+            <span>Technical</span>
           </button>
           <button class="step-tab" type="button" data-step-target="4">
             <span class="step-number">5</span>
-            <span>Execution</span>
+            <span>Brand and UX</span>
           </button>
           <button class="step-tab" type="button" data-step-target="5">
             <span class="step-number">6</span>
+            <span>Execution</span>
+          </button>
+          <button class="step-tab" type="button" data-step-target="6">
+            <span class="step-number">7</span>
             <span>Preview</span>
           </button>
         </nav>
@@ -124,7 +128,37 @@
             </label>
           </section>
 
-          <section class="step-panel" data-step="1" aria-labelledby="scopeTitle">
+          <section class="step-panel" data-step="1" aria-labelledby="documentsTitle">
+            <div class="panel-heading">
+              <h2 id="documentsTitle">Project Documents</h2>
+              <p>Add PRDs, briefs, specs, research notes, or other source documents for the project manager agent to review before planning tasks.</p>
+            </div>
+
+            <div class="upload-zone">
+              <label class="upload-label">
+                <span>Upload source documents</span>
+                <input id="sourceDocsInput" type="file" multiple accept=".md,.markdown,.txt,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.csv,.json,.yaml,.yml,.png,.jpg,.jpeg,.webp">
+              </label>
+              <p>Selected files are copied to <strong>ProjectDocs/Source/</strong> only when you write files to a chosen project folder. The wizard does not upload them anywhere.</p>
+            </div>
+
+            <div class="doc-list-panel">
+              <div class="doc-list-heading">
+                <h3>Selected documents</h3>
+                <button class="ghost-button" type="button" id="clearSourceDocsButton">Clear documents</button>
+              </div>
+              <ul id="sourceDocsList" class="source-doc-list" aria-live="polite">
+                <li>No source documents selected.</li>
+              </ul>
+            </div>
+
+            <label>
+              <span>Document review notes</span>
+              <textarea name="documentNotes" rows="5" placeholder="Summarize any key PRD decisions, constraints, or places the project manager should inspect first."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="2" aria-labelledby="scopeTitle">
             <div class="panel-heading">
               <h2 id="scopeTitle">Scope and Workflows</h2>
               <p>MVP boundaries, workflows, risks, and success criteria.</p>
@@ -164,7 +198,7 @@
             </label>
           </section>
 
-          <section class="step-panel" data-step="2" aria-labelledby="technicalTitle">
+          <section class="step-panel" data-step="3" aria-labelledby="technicalTitle">
             <div class="panel-heading">
               <h2 id="technicalTitle">Technical, Security, and Data</h2>
               <p>Architecture, ownership, privacy, integrations, and environment needs.</p>
@@ -215,7 +249,7 @@
             </label>
           </section>
 
-          <section class="step-panel" data-step="3" aria-labelledby="brandUxTitle">
+          <section class="step-panel" data-step="4" aria-labelledby="brandUxTitle">
             <div class="panel-heading">
               <h2 id="brandUxTitle">Brand and UX</h2>
               <p>Identity, tone, accessibility, journeys, states, and mock readiness.</p>
@@ -294,7 +328,7 @@
             </label>
           </section>
 
-          <section class="step-panel" data-step="4" aria-labelledby="executionTitle">
+          <section class="step-panel" data-step="5" aria-labelledby="executionTitle">
             <div class="panel-heading">
               <h2 id="executionTitle">Execution Readiness</h2>
               <p>Milestones, initial tasks, assignments, and open questions.</p>
@@ -318,7 +352,7 @@
             </label>
           </section>
 
-          <section class="step-panel preview-panel" data-step="5" aria-labelledby="previewTitle">
+          <section class="step-panel preview-panel" data-step="6" aria-labelledby="previewTitle">
             <div class="panel-heading">
               <h2 id="previewTitle">Preview and Write</h2>
               <p>Select files, inspect Markdown, then download or write to a chosen folder.</p>
@@ -334,27 +368,31 @@
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="projectPlan" checked>
-                    <span>project-docs/project-plan.md</span>
+                    <span>ProjectDocs/project-plan.md</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="brandKit" checked>
-                    <span>project-docs/brand-identity-kit.md</span>
+                    <span>ProjectDocs/brand-identity-kit.md</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="uxBrief" checked>
-                    <span>project-docs/ux-design-brief.md</span>
+                    <span>ProjectDocs/ux-design-brief.md</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="uiMock" checked>
-                    <span>project-docs/ui-mock-approval.md</span>
+                    <span>ProjectDocs/ui-mock-approval.md</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="taskBreakdown" checked>
-                    <span>project-docs/task-breakdown.md</span>
+                    <span>ProjectDocs/task-breakdown.md</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="taskAssignment" checked>
-                    <span>project-docs/task-assignment.md</span>
+                    <span>ProjectDocs/task-assignment.md</span>
+                  </label>
+                  <label class="check-row">
+                    <input type="checkbox" name="output" value="sourceDocs" checked>
+                    <span>ProjectDocs/Source/uploaded documents</span>
                   </label>
                   <label class="check-row">
                     <input type="checkbox" name="output" value="adr">

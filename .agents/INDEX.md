@@ -86,6 +86,7 @@ All rows are additive to the baseline skills. For non-trivial tasks, load `secur
 | Task signal                                                                 | Load these additional skills                                  |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Broad, risky, cross-module, long-running, or context-heavy task             | `agent-team.md`                                               |
+| PRD, spec, brief, research, design reference, or source document review     | `project-planning.md`, `documentation.md`                     |
 | New project idea, product brief, MVP, roadmap, or broad feature plan        | `project-planning.md`, `documentation.md`                     |
 | Task planning, backlog shaping, implementation slicing                      | `task-breakdown.md`, `testing.md`                             |
 | Assigning work to agents, subagents, contributors, or parallel streams      | `task-assignment.md`, `agent-team.md` if parallel agents are used |
@@ -188,9 +189,9 @@ Optional local utilities live in `/tools/`.
 
 | Tool | Path | Use for |
 | --- | --- | --- |
-| Project Onboarding Wizard | `/tools/project-onboarding-wizard/index.html` | Browser-based collection of project context, planning, brand, UX, mock approval, task, assignment, and ADR details with Markdown preview and file generation. |
+| Project Onboarding Wizard | `/tools/project-onboarding-wizard/index.html` | Browser-based collection of project context, source documents, planning, brand, UX, mock approval, task, assignment, and ADR details with Markdown preview and file generation. |
 
-Generated project-specific planning artifacts should live in `/project-docs/` or another project documentation location, not inside `/.agents/`.
+Generated project-specific planning artifacts should live in `/ProjectDocs/` or another project documentation location, not inside `/.agents/`. Uploaded source documents such as PRDs, specs, briefs, research, and design references should live under `/ProjectDocs/Source/`.
 
 ---
 

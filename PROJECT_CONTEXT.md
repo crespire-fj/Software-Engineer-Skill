@@ -31,7 +31,7 @@ The pack is built around a router-and-skills model:
 * `/.codex/agents/` provides a small optional starter pack of governed Codex custom agents.
 * `/adr/` stores project-level decisions.
 * `scripts/validate-governance-pack.py` checks basic governance integrity.
-* `tools/project-onboarding-wizard/` provides a local HTML and JavaScript wizard for generating first-draft project context, planning, design, task, assignment, and ADR artifacts.
+* `tools/project-onboarding-wizard/` provides a local HTML and JavaScript wizard for generating first-draft project context, source-document copies, planning, design, task, assignment, and ADR artifacts.
 
 The main non-goal is breadth for its own sake. The pack favors a curated, safe-by-default set of rules and agents over a large catalog of loosely governed roles.
 
@@ -75,7 +75,7 @@ Purpose: `scripts/validate-governance-pack.py` checks governance pack integrity 
 README: root `README.md`
 
 Module: Project onboarding wizard
-Purpose: `tools/project-onboarding-wizard/` helps users create or update first-draft governance artifacts from a browser form.
+Purpose: `tools/project-onboarding-wizard/` helps users create or update first-draft governance artifacts and copy source project documents into `ProjectDocs/Source/` from a browser form.
 README: `tools/project-onboarding-wizard/README.md`
 
 ## Architecture Overview
@@ -91,7 +91,7 @@ The architecture is organized as portable repository assets:
 * `/scripts/` contains maintenance checks
 * `/tools/` contains optional local utilities for using the pack
 
-The main integration path is copying these files into another software project, then adapting `PROJECT_CONTEXT.md`, module READMEs, ADRs, and any project-specific Codex agents.
+The main integration path is copying these files into another software project, then adapting `PROJECT_CONTEXT.md`, `ProjectDocs/`, module READMEs, ADRs, and any project-specific Codex agents.
 
 ## Technology Stack
 
@@ -144,7 +144,7 @@ Ownership is documentation ownership:
 * `/.agents/skills/*.md` own domain-specific engineering guidance
 * `/.agents/templates/` owns reusable documentation and agent templates
 * `/.codex/agents/*.toml` own Codex-specific specialist role instructions
-* `tools/project-onboarding-wizard/*` owns the local onboarding wizard UI and generation logic
+* `tools/project-onboarding-wizard/*` owns the local onboarding wizard UI, source-document intake, and generation logic
 * `/adr/*.md` own project decisions for the governance pack
 * `PROJECT_CONTEXT.md` owns the current high-level project context
 
@@ -179,6 +179,7 @@ The main maintenance risks are documentation drift and agent instruction drift:
 * new skill files must be listed in `/.agents/INDEX.md`
 * routed skill references must point to existing files
 * planning, brand, UX, mock approval, task breakdown, and task assignment templates must stay aligned with their skill files
+* `ProjectDocs/Source/` source-document intake expectations must stay aligned across `AGENTS.md`, planning skills, task skills, the onboarding wizard, and ADRs
 * Codex agent TOML files must stay parseable and documented
 * `PROJECT_CONTEXT.md` must remain non-empty and current
 * significant decisions should be recorded in `/adr/`
@@ -218,13 +219,13 @@ Near-term improvements:
 
 `scripts/validate-governance-pack.py`: governance pack validation script
 
-`tools/project-onboarding-wizard/`: local browser wizard for generating project onboarding artifacts
+`tools/project-onboarding-wizard/`: local browser wizard for generating project onboarding artifacts and copying source documents into `ProjectDocs/Source/`
 
 `README.md`: install, usage, maintenance, and status documentation
 
 ## Last Updated
 
-Date: 2026-05-19
+Date: 2026-05-20
 
 Summary:
 
@@ -232,3 +233,4 @@ Summary:
 * Added optional Codex custom agent starter pack context and validation expectations.
 * Added pre-implementation planning, brand identity, UX design, UI mock approval, task breakdown, and task assignment context.
 * Added local onboarding wizard context.
+* Added source document intake context for PRDs, specs, briefs, and research files.

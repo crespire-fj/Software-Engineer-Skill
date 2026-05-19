@@ -16,7 +16,8 @@ Violating these rules blocks completion.
 2. Do not hide dependencies, blockers, security requirements, data impacts, or documentation expectations.
 3. Do not split tasks in a way that causes unclear module ownership, duplicate work, or conflicting file edits.
 4. Do not mark a task implementation-ready if required product, UX, API, data, permission, or integration decisions are still open.
-5. Tests and verification expectations must be stated for each meaningful task.
+5. Review relevant source documents in `/ProjectDocs/Source/` before converting a plan into tasks when those documents exist.
+6. Tests and verification expectations must be stated for each meaningful task.
 
 ---
 
@@ -28,6 +29,7 @@ Each task should include:
 
 * title
 * objective
+* source documents or plan sections that justify the task
 * module or ownership area
 * required skill files
 * dependencies and blockers
@@ -74,6 +76,8 @@ Each task should trace to a project plan item, approved design, workflow, risk, 
 
 If a task does not trace to one of these, question whether it belongs in the current scope.
 
+When source documents exist, tasks should also trace to the relevant PRD, spec, brief, research note, or design reference where practical.
+
 ### Pattern: Separate Decisions From Execution
 
 Do not bury unresolved decisions inside implementation tasks.
@@ -85,6 +89,7 @@ Create explicit decision or ADR tasks when architecture, data ownership, integra
 ## Common Mistakes
 
 * Creating vague tasks such as "build dashboard" or "add backend".
+* Creating tasks without reviewing available source documents in `/ProjectDocs/Source/`.
 * Splitting frontend and backend tasks without defining the contract between them.
 * Missing ownership, permission, validation, or error criteria.
 * Forgetting tests and documentation until the end.
@@ -98,6 +103,7 @@ Create explicit decision or ADR tasks when architecture, data ownership, integra
 Stop and ask before proceeding if:
 
 * the plan is not approved and the task breakdown would imply commitment to scope
+* source documents conflict with the approved plan or expected task scope
 * acceptance criteria cannot be written clearly
 * module ownership is unclear
 * dependencies between tasks cannot be ordered safely

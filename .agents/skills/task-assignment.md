@@ -17,7 +17,8 @@ Violating these rules blocks completion.
 3. Do not assign overlapping write scopes unless one owner is explicitly responsible for integration.
 4. Do not assign work that requires unresolved product, permission, architecture, destructive data, or public contract decisions.
 5. The parent or project manager agent remains responsible for integration and final verification.
-6. Assigned workers must not revert or overwrite unrelated changes made by others.
+6. Review relevant source documents in `/ProjectDocs/Source/` before assigning implementation or review work when those documents exist.
+7. Assigned workers must not revert or overwrite unrelated changes made by others.
 
 ---
 
@@ -30,6 +31,7 @@ Each assignment should include:
 * owner or role
 * task reference
 * goal
+* relevant source documents
 * files, modules, or responsibility scope
 * required skill files
 * in-scope work
@@ -70,6 +72,8 @@ When multiple people or agents contribute, identify who integrates the result an
 
 Integration includes checking contracts, tests, docs, security, and consistency with the approved plan.
 
+The integration owner should confirm assignments still match any relevant PRDs, specs, briefs, research notes, or design references in `/ProjectDocs/Source/`.
+
 ### Pattern: Give Reviewers a Question
 
 Review assignments should ask a concrete question.
@@ -85,6 +89,7 @@ Examples:
 ## Common Mistakes
 
 * Assigning vague work with no boundary.
+* Assigning work before reviewing available source documents.
 * Letting multiple workers edit the same files without coordination.
 * Delegating unresolved decisions.
 * Forgetting to tell workers what is out of scope.
@@ -98,6 +103,7 @@ Examples:
 Stop and ask before proceeding if:
 
 * no clear owner can be assigned
+* source documents conflict with the proposed assignment scope
 * write scopes overlap heavily
 * task dependencies are unresolved
 * assignment would require a worker to make product, architecture, permission, or public contract decisions
