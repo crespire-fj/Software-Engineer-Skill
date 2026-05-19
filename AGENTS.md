@@ -1,7 +1,7 @@
 # AGENTS.md
 
-Version: 1.0
-Last updated: 2026-05-04
+Version: 1.1
+Last updated: 2026-05-19
 
 ## Purpose
 
@@ -41,14 +41,15 @@ For every task:
 3. For any non-trivial task, read `PROJECT_CONTEXT.md` before planning. If `PROJECT_CONTEXT.md` is missing and the task requires business, product, architectural, integration, data, or security context, stop and ask. Only skip `PROJECT_CONTEXT.md` for true micro-edits such as typos, comments, or static copy that do not affect behavior.
 4. Identify task signals and load the relevant files from `/.agents/skills/`.
 5. Always load `security.md` and `modules.md` when they exist. These are the default baseline skills.
-6. Inspect existing implementation patterns before changing code.
-7. State which skills were loaded and why. If a seemingly relevant skill is not loaded, state why not.
-8. Make the smallest safe change that satisfies the request.
-9. Preserve existing behavior unless the task explicitly requires changing it.
-10. Verify security, data, performance, and documentation impact.
-11. Update relevant documentation, templates, module READMEs, or ADRs where required.
-12. Run existing tests or checks where available. If tests cannot be run, state why.
-13. Summarize what changed, what was checked, documentation updated, ADRs added or updated, and any risks or follow-up work.
+6. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation flow before coding: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment. Do not skip required approval points unless the user explicitly approves skipping them.
+7. Inspect existing implementation patterns before changing code.
+8. State which skills were loaded and why. If a seemingly relevant skill is not loaded, state why not.
+9. Make the smallest safe change that satisfies the request.
+10. Preserve existing behavior unless the task explicitly requires changing it.
+11. Verify security, data, performance, and documentation impact.
+12. Update relevant documentation, templates, module READMEs, or ADRs where required.
+13. Run existing tests or checks where available. If tests cannot be run, state why.
+14. Summarize what changed, what was checked, documentation updated, ADRs added or updated, and any risks or follow-up work.
 
 ---
 
@@ -105,6 +106,12 @@ When drafting or updating `security.md`, include public-form-specific controls s
 
 | Task signal                                                             | Load these additional skills                             |
 | ----------------------------------------------------------------------- | -------------------------------------------------------- |
+| New project idea, product brief, MVP, roadmap, or broad feature plan    | `project-planning.md`, `documentation.md`                |
+| Task planning, backlog shaping, implementation slicing                  | `task-breakdown.md`, `testing.md`                        |
+| Assigning work to agents, subagents, contributors, or parallel streams  | `task-assignment.md`                                     |
+| Brand direction, visual identity, tone, design tokens, product identity | `brand-identity.md`, `documentation.md`                  |
+| User journeys, onboarding, flows, IA, interaction behavior              | `ux-design.md`, `ui-components.md`                       |
+| Wireframes, mockups, prototypes, design approval before UI build        | `ui-mock-approval.md`, `ui-components.md`                |
 | SQL, ORM, query builders, indexes, relationships, database performance  | `database.md`                                            |
 | Schema changes, migrations, seed data, destructive changes              | `database.md`, `migrations.md`                           |
 | New or modified API endpoint                                            | `api-design.md`, `data-modeling.md`                      |
@@ -126,6 +133,9 @@ When drafting or updating `security.md`, include public-form-specific controls s
 
 | Task type                       | Load these additional skills                                                           |
 | ------------------------------- | -------------------------------------------------------------------------------------- |
+| New product or application idea | `project-planning.md`, `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `task-breakdown.md`, `task-assignment.md`, `documentation.md` |
+| User-facing major feature       | `project-planning.md`, `ux-design.md`, `ui-mock-approval.md`, `task-breakdown.md`, plus implementation skills matching the feature area |
+| Visual redesign or new brand    | `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `ui-components.md`, `documentation.md` |
 | Payment flow                    | `external-integrations.md`, `api-design.md`, `observability.md`                        |
 | Subscription or feature gating  | `data-modeling.md`                                                                     |
 | Admin dashboard or admin action | `ui-components.md`, `observability.md`                                                 |
@@ -149,6 +159,9 @@ Stop and ask before proceeding if:
 * the task changes a public API contract
 * the task changes payment, subscription, authentication, or authorization behavior
 * the task requires choosing between multiple architectural approaches
+* a broad product or feature idea lacks an approved project plan
+* brand identity, UX flow, or UI mock approval is required but missing
+* task breakdown or assignment would require unresolved product, permission, data, integration, or architecture decisions
 * a required environment variable or credential is missing
 * the correct module ownership is unclear
 * the change may break existing users
@@ -165,6 +178,7 @@ A task is complete only when:
 
 * the requested scope is implemented
 * relevant skill files were loaded and followed
+* required project plan, task breakdown, task assignment, brand, UX, and UI mock approval steps were completed or explicitly skipped by the user
 * existing behavior is preserved unless intentionally changed
 * server-side authorization is enforced where required
 * server-side input validation is handled where required
@@ -201,6 +215,8 @@ Agent rules belong in `/.agents/`.
 
 Project decisions belong in `/adr/`.
 
+Optional Codex custom agents belong in `/.codex/agents/`. They are execution helpers and must still follow this `AGENTS.md`, `/.agents/INDEX.md`, `PROJECT_CONTEXT.md`, and relevant skill files.
+
 Expected structure:
 
 ```txt
@@ -213,7 +229,14 @@ Expected structure:
 /.agents
   INDEX.md
   /skills
+    agent-team.md
     security.md
+    project-planning.md
+    task-breakdown.md
+    task-assignment.md
+    brand-identity.md
+    ux-design.md
+    ui-mock-approval.md
     database.md
     migrations.md
     api-design.md
@@ -229,12 +252,33 @@ Expected structure:
     configuration.md
     documentation.md
   /templates
+    codex-agent.toml
     module-readme.md
     adr.md
     project-context.md
+    project-plan.md
+    task-breakdown.md
+    task-assignment.md
+    brand-identity-kit.md
+    ux-design-brief.md
+    ui-mock-approval.md
+
+/.codex
+  config.example.toml
+  /agents
+    agent-or-specialist.toml
 
 /adr
   0001-example.md
+
+/scripts
+  validate-governance-pack.py
+
+/tools
+  /project-onboarding-wizard
+    index.html
+    styles.css
+    app.js
 ```
 
 Missing infrastructure behavior:

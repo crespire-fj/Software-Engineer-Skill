@@ -11,6 +11,9 @@ It is designed to help developers and AI agents work safely, consistently, and m
 * module documentation standards
 * architecture decision record templates
 * project context templates
+* project planning, task breakdown, and task assignment workflows
+* brand identity, UX design, and UI mock approval workflows
+* a local onboarding wizard for generating first-draft project artifacts
 * safe development workflows
 * stop-and-ask criteria for risky or ambiguous work
 
@@ -60,8 +63,15 @@ Add this governance pack to a software project using the following structure:
 /.agents
   INDEX.md
   /skills
+    agent-team.md
     security.md
     modules.md
+    project-planning.md
+    task-breakdown.md
+    task-assignment.md
+    brand-identity.md
+    ux-design.md
+    ui-mock-approval.md
     database.md
     migrations.md
     api-design.md
@@ -77,23 +87,54 @@ Add this governance pack to a software project using the following structure:
     documentation.md
   /templates
     adr.md
+    codex-agent.toml
     module-readme.md
     project-context.md
+    project-plan.md
+    task-breakdown.md
+    task-assignment.md
+    brand-identity-kit.md
+    ux-design-brief.md
+    ui-mock-approval.md
+
+/.codex
+  config.example.toml
+  /agents
+    agent-organizer.toml
+    api-contract-reviewer.toml
+    code-mapper.toml
+    database-migration-reviewer.toml
+    documentation-maintainer.toml
+    performance-reviewer.toml
+    security-reviewer.toml
+    test-strategist.toml
 
 /adr
   0001-example.md
+
+/scripts
+  validate-governance-pack.py
+
+/tools
+  /project-onboarding-wizard
+    index.html
+    styles.css
+    app.js
 ```
 
 ### Key folders
 
-| Path                  | Purpose                                                           |
-| --------------------- | ----------------------------------------------------------------- |
-| `AGENTS.md`           | Always-loaded root operating guide for agents.                    |
-| `/.agents/INDEX.md`   | Skill manifest and routing guide.                                 |
-| `/.agents/skills/`    | Task-specific engineering guidance files.                         |
-| `/.agents/templates/` | Reusable templates for ADRs, module READMEs, and project context. |
-| `/adr/`               | Architecture Decision Records for project decisions.              |
-| `PROJECT_CONTEXT.md`  | Root-level project overview and constraints.                      |
+| Path                  | Purpose                                                                      |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `AGENTS.md`           | Always-loaded root operating guide for agents.                               |
+| `/.agents/INDEX.md`   | Skill manifest and routing guide.                                            |
+| `/.agents/skills/`    | Task-specific engineering guidance files.                                    |
+| `/.agents/templates/` | Reusable templates for ADRs, Codex agents, module READMEs, context, plans, tasks, assignments, brand, UX, and mock approvals. |
+| `/.codex/agents/`     | Optional project-scoped Codex custom agents built from the governance rules. |
+| `/adr/`               | Architecture Decision Records for project decisions.                         |
+| `/scripts/`           | Maintenance and validation scripts for the pack.                             |
+| `/tools/`             | Optional local utilities such as the project onboarding wizard.              |
+| `PROJECT_CONTEXT.md`  | Root-level project overview and constraints.                                 |
 
 ---
 
@@ -126,7 +167,14 @@ Each skill file focuses on one engineering area.
 
 Examples:
 
+* `agent-team.md` for optional project manager and specialist subagent coordination on broad or risky work
 * `security.md` for authorization, input validation, ownership scope, public forms, and sensitive data
+* `project-planning.md` for turning broad ideas, MVPs, and roadmap items into approved implementation direction
+* `task-breakdown.md` for converting approved plans into implementation-ready tasks
+* `task-assignment.md` for assigning bounded work to agents, subagents, or contributors
+* `brand-identity.md` for product identity, tone, visual tokens, typography, imagery, and accessibility direction
+* `ux-design.md` for user journeys, onboarding, navigation, states, privacy moments, and accessibility flow
+* `ui-mock-approval.md` for wireframes, mockups, prototypes, responsive states, and Image Gen-assisted mock concepts after brand approval
 * `database.md` for SQL, ORM usage, indexes, query safety, and data access patterns
 * `api-design.md` for API contracts, request/response shape, pagination, errors, and idempotency
 * `ui-components.md` for design tokens, component ownership, UI states, accessibility, and shared components
@@ -153,12 +201,13 @@ For every non-trivial task, an agent should:
    * `security.md`
    * `modules.md`
 6. Load any additional skills required by the task.
-7. Declare which skills were loaded and why.
-8. Inspect existing implementation patterns.
-9. Make the smallest safe change.
-10. Verify tests, security, data impact, and documentation impact.
-11. Update module READMEs, `.env.example`, or ADRs where required.
-12. Summarize what changed, what was checked, and any risks.
+7. For broad ideas, new products, major features, or user-facing workflows, complete the appropriate pre-implementation steps: project plan, brand identity, UX design, UI mock approval, task breakdown, and task assignment.
+8. Declare which skills were loaded and why.
+9. Inspect existing implementation patterns.
+10. Make the smallest safe change.
+11. Verify tests, security, data impact, and documentation impact.
+12. Update module READMEs, `.env.example`, or ADRs where required.
+13. Summarize what changed, what was checked, and any risks.
 
 ---
 
@@ -175,10 +224,130 @@ These are baseline skills because most development tasks can accidentally affect
 
 ---
 
+## Optional Team Workflow
+
+For broad, risky, cross-module, long-running, or context-heavy work, agents may use an optional team workflow described in:
+
+```txt
+/.agents/skills/agent-team.md
+```
+
+In this workflow, a project manager agent owns task intake, context loading, scope control, delegation, integration, final verification, and user communication. Specialist subagents handle bounded concerns such as security review, database review, API design, UI implementation, testing, documentation, performance analysis, or integration review.
+
+The team workflow does not replace the default router-and-skills model. Each agent still follows `AGENTS.md`, `/.agents/INDEX.md`, and the relevant skill files. The project manager remains responsible for reviewing specialist output, resolving conflicts, preserving module ownership, and confirming the Definition of Done.
+
+Use this workflow when parallel specialist work reduces risk or context pressure. Avoid it for small tasks where coordination adds overhead without improving safety.
+
+---
+
+## Product Planning and Design Approval Workflow
+
+For new products, major features, or user-facing workflows, this pack supports a pre-implementation lifecycle:
+
+```txt
+Idea or project context
+  -> project plan
+  -> brand identity kit
+  -> UX design brief
+  -> UI mock approval
+  -> task breakdown
+  -> task assignment
+  -> implementation
+  -> testing, docs, and review
+```
+
+The goal is to stop agents from jumping directly from a broad idea to code. Plans, brand decisions, UX flows, and mocks should be approved before they become implementation constraints. If the user explicitly skips an approval stage, the agent should record that assumption and keep the implementation conservative.
+
+After the brand identity kit is finalized, agents may use Image Gen skills or approved image-generation tooling to create mock design concepts, screen comps, visual references, or supporting bitmap assets. Generated mock images are approval references, not implementation specifications. They must be translated into explicit layout, component, state, accessibility, and behavior requirements before coding starts.
+
+Reusable templates for these artifacts live in `/.agents/templates/`.
+
+---
+
+## Project Onboarding Wizard
+
+This repository includes a dependency-free local wizard at:
+
+```txt
+/tools/project-onboarding-wizard/index.html
+```
+
+Open it directly in a browser to collect project context, planning, brand, UX, mock approval, task, and assignment details. The wizard previews generated Markdown and can either download selected files or write them into a selected project folder when the browser supports local folder access.
+
+Generated project-specific artifacts are written to:
+
+```txt
+/PROJECT_CONTEXT.md
+/project-docs/project-plan.md
+/project-docs/brand-identity-kit.md
+/project-docs/ux-design-brief.md
+/project-docs/ui-mock-approval.md
+/project-docs/task-breakdown.md
+/project-docs/task-assignment.md
+/adr/0001-use-agent-governance-pack.md
+```
+
+`/.agents/` remains reserved for agent operating rules, reusable skills, and reusable templates. Planning outputs for a specific project should live in `project-docs/` or another project documentation location.
+
+---
+
+## Codex Subagent Starter Pack
+
+This repository includes a small project-scoped Codex custom agent pack in:
+
+```txt
+/.codex/agents/
+```
+
+These agents bridge the Markdown skill-router model with Codex-native subagent files. They are intentionally curated rather than exhaustive.
+
+| Agent | Sandbox | Primary use |
+| --- | --- | --- |
+| `agent-organizer` | `read-only` | Split broad work into safe local and delegated tasks. |
+| `api-contract-reviewer` | `read-only` | Review endpoint contracts, DTOs, compatibility, and error behavior. |
+| `code-mapper` | `read-only` | Trace code paths, ownership boundaries, validation points, and side effects. |
+| `database-migration-reviewer` | `read-only` | Review schema, migration, data-preservation, rollback, and index risks. |
+| `documentation-maintainer` | `workspace-write` | Update assigned docs, ADRs, templates, project context, or module READMEs. |
+| `performance-reviewer` | `read-only` | Review scalability, bounded work, query load, caching fit, and high-traffic risks. |
+| `security-reviewer` | `read-only` | Review authorization, ownership scope, input validation, secrets, uploads, and webhooks. |
+| `test-strategist` | `read-only` | Identify regression coverage, test level, edge cases, and verification gaps. |
+
+Read-only is the default for review, mapping, research, and planning work. Use write-capable agents only when the task requires edits and the parent agent can assign a clear write scope.
+
+Example review workflow:
+
+```txt
+Review this branch with project-scoped subagents.
+Have code-mapper trace the affected behavior, security-reviewer check auth and input risks, and test-strategist identify missing coverage.
+Wait for all three, then summarize findings with file references and a smallest-safe-fix recommendation.
+```
+
+Example API workflow:
+
+```txt
+Review the new endpoint with api-contract-reviewer, security-reviewer, and documentation-maintainer.
+Keep the reviewers read-only. Let documentation-maintainer update only the assigned API docs after the contract decision is clear.
+```
+
+Example migration workflow:
+
+```txt
+Review this migration with database-migration-reviewer and test-strategist.
+Check whether existing data is preserved, rollback expectations are clear, and representative data tests are present.
+```
+
+Use `/.agents/templates/codex-agent.toml` when creating new project-specific agents.
+
+---
+
 ## Skill Routing Examples
 
 | Task                     | Skills to load                                                                                                                                     |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Major cross-module feature | `agent-team.md`, `security.md`, `modules.md`, plus the relevant implementation, testing, and documentation skills                                |
+| New product idea         | `security.md`, `modules.md`, `project-planning.md`, `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `task-breakdown.md`, `task-assignment.md`, `documentation.md` |
+| Prepare implementation tasks | `security.md`, `modules.md`, `task-breakdown.md`, `task-assignment.md`, `testing.md`                                                          |
+| Create UI mock for approval | `security.md`, `modules.md`, `brand-identity.md`, `ux-design.md`, `ui-mock-approval.md`, `ui-components.md`                                   |
 | Add a new API endpoint   | `security.md`, `modules.md`, `api-design.md`, `data-modeling.md`                                                                                   |
 | Change a database query  | `security.md`, `modules.md`, `database.md`                                                                                                         |
 | Add a new table          | `security.md`, `modules.md`, `database.md`, `migrations.md`, `data-modeling.md`                                                                    |
@@ -240,8 +409,15 @@ Templates live in:
 | Template             | Purpose                                       |
 | -------------------- | --------------------------------------------- |
 | `adr.md`             | Template for Architecture Decision Records.   |
+| `codex-agent.toml`   | Template for Codex custom agent TOML files.   |
 | `module-readme.md`   | Template for module-level README files.       |
 | `project-context.md` | Template for root-level `PROJECT_CONTEXT.md`. |
+| `project-plan.md`    | Template for project, MVP, or major feature plans. |
+| `task-breakdown.md`  | Template for implementation-ready task lists. |
+| `task-assignment.md` | Template for bounded contributor or agent assignments. |
+| `brand-identity-kit.md` | Template for brand identity and visual direction. |
+| `ux-design-brief.md` | Template for user journeys, states, and experience decisions. |
+| `ui-mock-approval.md` | Template for UI mock approval and implementation handoff notes. |
 
 Completed ADRs should be stored in:
 
@@ -357,11 +533,16 @@ At a high level, this pack enforces these principles:
 
 1. Copy `AGENTS.md` to the project root.
 2. Copy the `/.agents/` folder to the project root.
-3. Create `/adr/` at the project root.
-4. Create `PROJECT_CONTEXT.md` using `/.agents/templates/project-context.md`.
-5. Add module READMEs for major modules using `/.agents/templates/module-readme.md`.
-6. Update `.env.example` if the project uses environment variables.
-7. Commit the governance files with the project.
+3. Copy `/.codex/agents/` if the project will use Codex custom subagents.
+4. Copy selected settings from `/.codex/config.example.toml` into the project's own `/.codex/config.toml` if needed.
+5. Create `/adr/` at the project root.
+6. Create `PROJECT_CONTEXT.md` using `/.agents/templates/project-context.md`.
+7. Optionally open `/tools/project-onboarding-wizard/index.html` to generate first-draft `PROJECT_CONTEXT.md`, `project-docs/*`, and ADR files.
+8. Use the planning, brand, UX, mock approval, task breakdown, and assignment templates when taking broad ideas into implementation.
+9. Add module READMEs for major modules using `/.agents/templates/module-readme.md`.
+10. Update `.env.example` if the project uses environment variables.
+11. Run `python scripts/validate-governance-pack.py` when Python 3.11 or newer is available.
+12. Commit the governance files with the project.
 
 Recommended first ADR:
 
@@ -370,6 +551,28 @@ Recommended first ADR:
 ```
 
 This ADR should record the decision to use this agent governance structure.
+
+---
+
+## Validation
+
+Run the validation script after changing skills, templates, Codex agents, or governance docs:
+
+```bash
+python scripts/validate-governance-pack.py
+```
+
+The script checks:
+
+* required governance files exist and are not empty
+* every skill file is listed in `/.agents/INDEX.md`
+* routed skill references point to existing files
+* Codex agent TOML files parse and include required fields
+* Codex agent names are unique and listed in `/.codex/agents/README.md`
+* `PROJECT_CONTEXT.md` has meaningful non-template content
+* common secret-like patterns are not present in tracked text assets
+
+The script uses Python standard library `tomllib`, so it requires Python 3.11 or newer and does not add a project dependency.
 
 ---
 
@@ -404,6 +607,15 @@ This ADR should record the decision to use this agent governance structure.
 * module READMEs need new standard sections
 * ADR format changes
 * project context expectations change
+* planning, task, brand, UX, or mock approval artifacts need new standard sections
+* Codex custom agent structure or required fields change
+
+### Update `/.codex/agents/` when:
+
+* a reusable specialist role becomes valuable across projects
+* an existing agent's scope, sandbox, model, or output contract changes
+* skill guidance changes in a way that should be reflected in agent instructions
+* workflow examples need a different default agent lineup
 
 ### Update ADRs when:
 
@@ -450,9 +662,15 @@ This governance pack currently includes:
 
 * root `AGENTS.md`
 * skill index
-* 15 skill files
+* 22 skill files
+* local project onboarding wizard
 * ADR template
+* Codex custom agent template
 * module README template
 * project context template
+* project plan, task breakdown, task assignment, brand identity kit, UX brief, and UI mock approval templates
+* 8 project-scoped Codex custom agents
+* validation script
+* accepted ADRs for the Codex subagent starter pack, pre-implementation planning/design workflow, and onboarding wizard
 
-It is ready to be added to software projects and refined through real project
+It is ready to be added to software projects and refined through real project use.

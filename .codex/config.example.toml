@@ -1,0 +1,13 @@
+# Example Codex configuration for this governance pack.
+#
+# Copy the settings you want into your own `.codex/config.toml`.
+# Keep project-specific secrets, tokens, and credentials out of this file.
+
+[agents]
+# Keep one layer of delegation by default. Deeper recursion is harder to audit.
+max_depth = 1
+
+# Six concurrent threads is enough for review, exploration, and documentation
+# workflows without creating unnecessary coordination overhead.
+max_threads = 6
+
